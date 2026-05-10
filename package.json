@@ -1,17 +1,24 @@
 {
   "name": "api-rest-files",
   "version": "1.0.0",
-  "description": "",
+  "description": "API REST con Node.js, MongoDB y Cloudinary para gestión de películas y directores.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "seed": "node seed.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Guillepani/api-rest-files.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "cloudinary",
+    "multer"
+  ],
+  "author": "Guillem Pani",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
