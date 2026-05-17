@@ -12,8 +12,11 @@ const upload = require('../../middlewares/file')
 const router = express.Router()
 
 router.get('/', getDirectors)
+
 router.post('/', upload.single('img'), createDirector)
-router.put('/:id', updateDirector)
+
+router.put('/:id', upload.single('img'), updateDirector)
+
 router.delete('/:id', deleteDirector)
 
 module.exports = router

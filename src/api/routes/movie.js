@@ -15,7 +15,7 @@ router.get('/', getMovies)
 
 router.post('/', upload.single('img'), createMovie)
 
-router.put('/:id', updateMovie)
+router.put('/:id', upload.single('img'), updateMovie)
 
 router.delete('/:id', deleteMovie)
 

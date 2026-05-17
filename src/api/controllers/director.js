@@ -44,16 +44,49 @@ const updateDirector = async (req, res) => {
       return res.status(400).json('ID no válido')
     }
 
-    const directorUpdated = await Director.findByIdAndUpdate(id, req.body, {
-      new: true
-    }).populate('movies')
+    const directorToUpdate = await Director.findById(id)
 
-    if (!directorUpdated) {
+    if (!directorToUpdate) {
       return res.status(404).json('Director no encontrado')
     }
 
+    if (req.body.movies) {
+      const parsedMovies = JSON.parse(req.body.movies)
+
+      const currentMovies = directorToUpdate.movies.map((movie) =>
+        movie.toString()
+      )
+
+      const newMovies = parsedMovies.filter(
+        (movie) => !currentMovies.includes(movie)
+      )
+
+      directorToUpdate.movies.push(...newMovies)
+    }
+
+    if (req.file) {
+      if (directorToUpdate.img) {
+        const imgName = directorToUpdate.img.split('/').pop().split('.')[0]
+
+        await cloudinary.uploader.destroy(
+          `${process.env.CLOUDINARY_FOLDER}/${imgName}`
+        )
+      }
+
+      directorToUpdate.img = req.file.path
+    }
+
+    directorToUpdate.name = req.body.name || directorToUpdate.name
+
+    directorToUpdate.country = req.body.country || directorToUpdate.country
+
+    await directorToUpdate.save()
+
+    const directorUpdated = await Director.findById(id).populate('movies')
+
     return res.status(200).json(directorUpdated)
   } catch (error) {
+    console.log(error)
     return res.status(400).json('Error al actualizar director')
   }
 }

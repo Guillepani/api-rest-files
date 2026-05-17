@@ -40,16 +40,31 @@ const updateMovie = async (req, res) => {
       return res.status(400).json('ID no válido')
     }
 
+    const movieToUpdate = await Movie.findById(id)
+
+    if (!movieToUpdate) {
+      return res.status(404).json('Movie no encontrada')
+    }
+
+    if (req.file) {
+      if (movieToUpdate.img) {
+        const imgName = movieToUpdate.img.split('/').pop().split('.')[0]
+
+        await cloudinary.uploader.destroy(
+          `${process.env.CLOUDINARY_FOLDER}/${imgName}`
+        )
+      }
+
+      req.body.img = req.file.path
+    }
+
     const movieUpdated = await Movie.findByIdAndUpdate(id, req.body, {
       new: true
     })
 
-    if (!movieUpdated) {
-      return res.status(404).json('Movie no encontrada')
-    }
-
     return res.status(200).json(movieUpdated)
   } catch (error) {
+    console.log(error)
     return res.status(400).json('Error al actualizar movie')
   }
 }

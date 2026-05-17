@@ -21,32 +21,40 @@ Permite realizar operaciones CRUD completas, gestionar relaciones entre coleccio
 
 # Estructura del proyecto
 
+# Estructura del proyecto
+
+```bash
 src/
 ├── api/
-│ ├── controllers/
-│ ├── models/
-│ └── routes/
+│   ├── controllers/
+│   ├── models/
+│   └── routes/
 ├── config/
 └── middlewares/
-
----
+```
 
 # Modelos
 
 ## Movie
 
-- title
-- year
-- img
+```js
+{
+  title: String,
+  year: Number,
+  img: String
+}
+```
 
 ## Director
 
-- name
-- country
-- img
-- movies
-
----
+```js
+{
+  name: String,
+  country: String,
+  img: String,
+  movies: [ObjectId]
+}
+```
 
 # Relaciones
 
@@ -60,25 +68,23 @@ Se utiliza populate() para obtener la información completa de las películas re
 
 ## Movies
 
-| Método | Endpoint           | Descripción         |
-| ------ | ------------------ | ------------------- |
-| GET    | /api/v1/movies     | Obtener películas   |
-| POST   | /api/v1/movies     | Crear película      |
-| PUT    | /api/v1/movies/:id | Actualizar película |
-| DELETE | /api/v1/movies/:id | Eliminar película   |
-
----
+| Método | Endpoint           | Descripción             |
+| ------ | ------------------ | ----------------------- |
+| GET    | /api/v1/movies     | Obtener películas       |
+| GET    | /api/v1/movies/:id | Obtener película por ID |
+| POST   | /api/v1/movies     | Crear película          |
+| PUT    | /api/v1/movies/:id | Actualizar película     |
+| DELETE | /api/v1/movies/:id | Eliminar película       |
 
 ## Directors
 
-| Método | Endpoint              | Descripción         |
-| ------ | --------------------- | ------------------- |
-| GET    | /api/v1/directors     | Obtener directores  |
-| POST   | /api/v1/directors     | Crear director      |
-| PUT    | /api/v1/directors/:id | Actualizar director |
-| DELETE | /api/v1/directors/:id | Eliminar director   |
-
----
+| Método | Endpoint              | Descripción             |
+| ------ | --------------------- | ----------------------- |
+| GET    | /api/v1/directors     | Obtener directores      |
+| GET    | /api/v1/directors/:id | Obtener director por ID |
+| POST   | /api/v1/directors     | Crear director          |
+| PUT    | /api/v1/directors/:id | Actualizar director     |
+| DELETE | /api/v1/directors/:id | Eliminar director       |
 
 # Subida de imágenes
 
@@ -92,15 +98,17 @@ Las imágenes se almacenan en Cloudinary.
 
 # Variables de entorno
 
-Crear un archivo `.env` con:
+# Variables de entorno
 
-MONGO_URI=
-CLOUD_NAME=
-API_KEY=
-API_SECRET=
-CLOUDINARY_FOLDER=
+Crear un archivo `.env` con la siguiente estructura:
 
----
+```env
+MONGO_URI=mongodb+srv://usuario:password@cluster.mongodb.net/database
+CLOUD_NAME=nombre_cloudinary
+API_KEY=123456789012345
+API_SECRET=abcdefghijklmnopqrstuvwxyz
+CLOUDINARY_FOLDER=api-rest-files
+```
 
 # Scripts
 
